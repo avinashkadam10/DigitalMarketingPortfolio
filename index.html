@@ -534,32 +534,7 @@
                   ></a>
                 </div>
               </div>
-              <div class="col-xl-6">
-                <form id="contactForm" class="contact-form" action="contact.php" method="POST" data-animation="fade" data-animation-direction="bottom">
-                    <div class="row" data-animation="fade" data-animation-direction="bottom" data-animation-duration="0.75" data-animation-delay="1" data-animation-offset="40">
-                        <div class="col-md-6">
-                            <input type="text" name="name" id="name" placeholder="Name" required />
-                        </div>
-                        <div class="col-md-6">
-                            <input type="email" name="email" id="email" placeholder="E-mail" required />
-                        </div>
-                        <div class="col-md-12">
-                            <input type="text" name="subject" id="subject" placeholder="Subject" required />
-                        </div>
-                        <div class="col-md-12">
-                            <textarea name="message" id="message" placeholder="Message" required></textarea>
-                        </div>
-                        <div class="col-md-12">
-                            <button type="submit" class="theme-btn-with-bg hover-bg-white btn_moveing_hover justify-content-center">
-                                Submit Now
-                            </button>
-                        </div>
-                        <div class="col-md-12">
-                            <p id="responseMessage"></p> <!-- Response message will be shown here -->
-                        </div>
-                    </div>
-                </form>
-            </div>
+              
             
             </div>
           </div>
@@ -706,7 +681,7 @@
     <script>
       document.addEventListener("DOMContentLoaded", function() {
           document.getElementById("contactForm").addEventListener("submit", function(event) {
-              event.preventDefault(); // Prevent default navigation
+              event.preventDefault(); // Stop page navigation
       
               let form = this;
               let formData = new FormData(form);
@@ -722,15 +697,17 @@
                       responseDiv.innerHTML = "<p style='color: green;'>Message Sent Successfully!</p>";
                       form.reset();
                   } else {
-                      responseDiv.innerHTML = "<p style='color: red;'>Error Sending Message. Try Again!</p>";
+                      responseDiv.innerHTML = "<p style='color: red;'>Error: " + data + "</p>";
                   }
               })
               .catch(error => {
                   console.error("Error:", error);
+                  document.getElementById("responseMessage").innerHTML = "<p style='color: red;'>An unexpected error occurred.</p>";
               });
           });
       });
       </script>
+      
       
   </body>
 
