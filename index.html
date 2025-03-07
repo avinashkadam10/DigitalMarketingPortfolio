@@ -561,30 +561,6 @@
                 </form>
             </div>
             
-            <script>
-            document.getElementById("contactForm").addEventListener("submit", function(event) {
-                event.preventDefault(); // Prevent form from submitting the default way
-            
-                let formData = new FormData(this);
-            
-                fetch("contact.php", {
-                    method: "POST",
-                    body: formData
-                })
-                .then(response => response.text())
-                .then(data => {
-                    let responseDiv = document.getElementById("responseMessage");
-                    if (data.trim() === "success") {
-                        responseDiv.innerHTML = "<p style='color: green;'>Message Sent Successfully!</p>";
-                        document.getElementById("contactForm").reset();
-                    } else {
-                        responseDiv.innerHTML = "<p style='color: red;'>Error Sending Message. Try Again!</p>";
-                    }
-                })
-                .catch(error => console.error("Error:", error));
-            });
-            </script>
-            
             </div>
           </div>
         </div>
@@ -727,6 +703,35 @@
     <!--  -->
     <script src="js/animation.js"></script>
     <script src="js/main.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          document.getElementById("contactForm").addEventListener("submit", function(event) {
+              event.preventDefault(); // Prevent default navigation
+      
+              let form = this;
+              let formData = new FormData(form);
+      
+              fetch("contact.php", {
+                  method: "POST",
+                  body: formData
+              })
+              .then(response => response.text())
+              .then(data => {
+                  let responseDiv = document.getElementById("responseMessage");
+                  if (data.trim() === "success") {
+                      responseDiv.innerHTML = "<p style='color: green;'>Message Sent Successfully!</p>";
+                      form.reset();
+                  } else {
+                      responseDiv.innerHTML = "<p style='color: red;'>Error Sending Message. Try Again!</p>";
+                  }
+              })
+              .catch(error => {
+                  console.error("Error:", error);
+              });
+          });
+      });
+      </script>
+      
   </body>
 
   <!-- Mirrored from ashik-html.vercel.app/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Mar 2025 11:50:47 GMT -->
