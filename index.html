@@ -535,28 +535,56 @@
                 </div>
               </div>
               <div class="col-xl-6">
-                <form class="contact-form" action="contact.php" method="POST" data-animation="fade" data-animation-direction="bottom">
+                <form id="contactForm" class="contact-form" action="contact.php" method="POST" data-animation="fade" data-animation-direction="bottom">
                     <div class="row" data-animation="fade" data-animation-direction="bottom" data-animation-duration="0.75" data-animation-delay="1" data-animation-offset="40">
                         <div class="col-md-6">
-                            <input type="text" name="name" placeholder="Name" required />
+                            <input type="text" name="name" id="name" placeholder="Name" required />
                         </div>
                         <div class="col-md-6">
-                            <input type="email" name="email" placeholder="E-mail" required />
+                            <input type="email" name="email" id="email" placeholder="E-mail" required />
                         </div>
                         <div class="col-md-12">
-                            <input type="text" name="subject" placeholder="Subject" required />
+                            <input type="text" name="subject" id="subject" placeholder="Subject" required />
                         </div>
                         <div class="col-md-12">
-                            <textarea name="message" placeholder="Message" required></textarea>
+                            <textarea name="message" id="message" placeholder="Message" required></textarea>
                         </div>
                         <div class="col-md-12">
                             <button type="submit" class="theme-btn-with-bg hover-bg-white btn_moveing_hover justify-content-center">
                                 Submit Now
                             </button>
                         </div>
+                        <div class="col-md-12">
+                            <p id="responseMessage"></p> <!-- Response message will be shown here -->
+                        </div>
                     </div>
                 </form>
             </div>
+            
+            <script>
+            document.getElementById("contactForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // Prevent form from submitting the default way
+            
+                let formData = new FormData(this);
+            
+                fetch("contact.php", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(data => {
+                    let responseDiv = document.getElementById("responseMessage");
+                    if (data.trim() === "success") {
+                        responseDiv.innerHTML = "<p style='color: green;'>Message Sent Successfully!</p>";
+                        document.getElementById("contactForm").reset();
+                    } else {
+                        responseDiv.innerHTML = "<p style='color: red;'>Error Sending Message. Try Again!</p>";
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+            });
+            </script>
+            
             </div>
           </div>
         </div>
